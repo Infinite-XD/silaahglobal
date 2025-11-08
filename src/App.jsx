@@ -1,83 +1,685 @@
-import React, { useEffect, useRef, useState } from "react";
-import SVG from 'react-inlinesvg';
+// App.jsx
+// This the main file that displays all components
 
-// Main
+import React, { useState, useEffect } from "react";
+import myIcon from './assets/silaahfullicon.svg';
+import myDarkIcon from './assets/darkfinal.svg';
+import miniIcon from './assets/myIcon.svg';
+/* =======================
+   Utility: Placeholder data
+   ======================= */
+const PROGRAMS = [
+  {
+    id: 1,
+    title: "Community Education",
+    desc:
+      "Empowering local communities through classes, workshops and lifelong learning initiatives.",
+    icon: (
+      <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M2 17l10 5 10-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    id: 2,
+    title: "Sustainable Agriculture",
+    desc:
+      "Supporting smallholders with training, seeds and market access for resilient food systems.",
+    icon: (
+      <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M3 21s4-4 9-4 9 4 9 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 3v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M8 7s1-4 4-4 4 4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    id: 3,
+    title: "Healthcare Access",
+    desc:
+      "Mobile clinics and preventive health programs reaching remote and underserved populations.",
+    icon: (
+      <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    id: 4,
+    title: "Youth Leadership",
+    desc:
+      "Mentorship and leadership programs for young changemakers to scale positive impact.",
+    icon: (
+      <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7l3-7z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+];
 
-export default function App() {
-  return (
-    NavButton()
-  );
+const TEAM = [
+  {
+    id: 1,
+    name: "Amina Noor",
+    role: "Founder & Executive Director",
+    photo:
+      "",
+    socials: { twitter: "#", linkedin: "#", facebook: "#" },
+  },
+  {
+    id: 2,
+    name: "Diego Alvarez",
+    role: "Programs Lead",
+    photo:
+      "https://images.unsplash.com/photo-1545996124-1ad95e5bdc17?w=800&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder",
+    socials: { twitter: "#", linkedin: "#", facebook: "#" },
+  },
+  {
+    id: 3,
+    name: "Meera Patel",
+    role: "Community Coordinator",
+    photo:
+      "",
+    socials: { twitter: "#", linkedin: "#", facebook: "#" },
+  },
+  {
+    id: 4,
+    name: "Omar Hassan",
+    role: "Finance & Partnerships",
+    photo:
+      "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=800&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder",
+    socials: { twitter: "#", linkedin: "#", facebook: "#" },
+  },
+];
+
+/* =======================
+   Hook: useDarkMode
+   - toggles 'dark' class on document.documentElement
+   - respects user's system preference on first load
+   ======================= */
+function useDarkMode() {
+  const [isDark, setIsDark] = useState(() => {
+    try {
+      const saved = localStorage.getItem("ngo_dark_mode");
+      if (saved !== null) return saved === "true";
+      // fallback to prefers-color-scheme
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    try {
+      localStorage.setItem("ngo_dark_mode", isDark ? "true" : "false");
+    } catch {}
+  }, [isDark]);
+
+  // smooth-scroll behaviour
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = "smooth";
+  }, []);
+
+  return [isDark, setIsDark];
+}
+
+function scrollTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth', // optional, for smooth scrolling
+  });
 }
 
 
-// Header, Navigation/icon
+/* =======================
+   Component: IconButton (small, accessible)
+   ======================= */
+const IconButton = ({ onClick, label, children }) => (
+  <button
+    onClick={onClick}
+    aria-label={label}
+    className="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 dark:focus:ring-indigo-300"
+  >
+    {children}
+  </button>
+);
 
-
-function NavButton() {
+/* =======================
+   ===== Header / Navbar =====
+   ======================= */
+function Header({ isDark, toggleDark }) {
   const [open, setOpen] = useState(false);
 
-  return (
-    <div className="fixed top-6 right-6 z-50">
-      <div className="relative">
-        {/* Button */}
-        <button
-          onClick={() => setOpen(!open)}
-          aria-haspopup="menu"
-          aria-expanded={open}
-          className={`w-14 h-14 rounded-full
-                     bg-gradient-to-br from-violet-600 via-fuchsia-600 to-indigo-600
-                     ring-1 ring-white/20 shadow-lg shadow-purple-600/30
-                     flex items-center justify-center
-                     transition-all duration-300 ease-out
-                     hover:scale-105 active:scale-95
-                     ${open ? "ring-2 ring-violet-300/50" : ""}`}
-        >
-          <SVG
-            src="src/assets/vectorised-image.svg"
-            className="w-14 h-14 text-white transition-transform duration-300 ease-out"
-          />
-        </button>
+  // choose bg classes based on isDark (light: gradient, dark: semi-transparent gray)
+  const headerBg = isDark
+    ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
+    : "bg-gradient-to-br from-purple-300 to-indigo-400 border-b border-transparent";
 
-        {/* Dropdown */}
-        <div
-          role="menu"
-          className={`absolute right-0 mt-5 w-56 origin-top-right
-                      rounded-xl border border-white/20
-                      bg-white/70 backdrop-blur-md shadow-lg
-                      transition-all duration-300 ease-out transform
-                      ${open ? "opacity-100 translate-y-2" : "opacity-0 -translate-y-2 pointer-events-none"}`}
-        >
-          <nav className="py-2">
-            {["Home", "About", "Services", "Contact"].map((item, i) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                style={{ transitionDelay: `${i * 40}ms` }}
-                className={`block px-5 py-3 text-sm font-medium text-zinc-600
-                            transition-all duration-300 ease-out
-                            hover:text-zinc-900 hover:bg-zinc-100/70
-                            ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}`}
-              >
-                {item}
-              </a>
-            ))}
+  return (
+    <header className={`sticky top-0 z-50 ${headerBg} backdrop-blur-md`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16">
+          {/* Brand */}
+          <div className="flex items-center space-x-3">
+            <a 
+            href="#" 
+            onClick={(e) => { 
+              e.preventDefault(); // prevent default anchor jump
+              scrollTop(); 
+            }}
+            className="flex items-center gap-3">
+              <img 
+              src={isDark ? myDarkIcon : myIcon}
+              alt="My Icon" width={80} height={50}/>
+            </a>
+          </div>
+
+          {/* Nav + actions */}
+          <nav className="hidden md:flex md:items-center md:space-x-6">
+          <a
+            href="#"
+            onClick={(e) => { 
+              e.preventDefault(); // prevent default anchor jump
+              scrollTop(); 
+            }}
+            className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+          >
+            Home
+          </a>
+            <a href="#about" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition">About</a>
+            <a href="#programs" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Programs</a>
+            <a href="#team" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Team</a>
+            <a href="#contact" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Contact</a>
           </nav>
+
+          <div className="flex items-center gap-3">
+            {/* Dark/Light toggle */}
+            <IconButton
+              onClick={() => toggleDark(prev => !prev)}
+              label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDark ? (
+                // Sun icon
+                <svg className="w-6 h-6 text-yellow-300" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 7a5 5 0 100 10 5 5 0 000-10z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ) : (
+                // Moon icon
+                <svg className="w-6 h-6 text-gray-800 dark:text-gray-100" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              )}
+            </IconButton>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <IconButton onClick={() => setOpen(o => !o)} label="Toggle menu">
+                <svg className="w-6 h-6 text-gray-800 dark:text-gray-100" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d={open ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </IconButton>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Mobile nav */}
+      {open && (
+        <div className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+          <div className="px-4 py-4 space-y-2">
+            <a href="#" 
+            onClick={(e) => { 
+              setOpen(false)
+              e.preventDefault(); // prevent default anchor jump
+              scrollTop(); 
+            }}
+            className="block text-gray-700 dark:text-gray-200">Home</a>
+            <a href="#about" onClick={() => setOpen(false)} className="block text-gray-700 dark:text-gray-200">About</a>
+            <a href="#programs" onClick={() => setOpen(false)} className="block text-gray-700 dark:text-gray-200">Programs</a>
+            <a href="#team" onClick={() => setOpen(false)} className="block text-gray-700 dark:text-gray-200">Team</a>
+            <a href="#contact" onClick={() => setOpen(false)} className="block text-gray-700 dark:text-gray-200">Contact</a>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
+
+/* =======================
+   ===== Hero Section =====
+   ======================= */
+function Hero() {
+  return (
+    <section id="home" className="relative overflow-hidden">
+      {/* Background gradient and subtle shapes */}
+      <div className="absolute inset-0">
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-purple-600 to-indigo-700 opacity-90 dark:opacity-95"
+          aria-hidden
+        />
+        <svg className="absolute -top-10 -left-10 opacity-20 w-96 h-96" viewBox="0 0 400 400" fill="none" aria-hidden>
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stopColor="#ffffff" stopOpacity="0.06" />
+              <stop offset="1" stopColor="#000000" stopOpacity="0.04" />
+            </linearGradient>
+          </defs>
+          <circle cx="200" cy="200" r="150" fill="url(#g1)" />
+        </svg>
+      </div>
+
+      {/* Content */}
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 lg:py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight drop-shadow-sm">
+              Building brighter futures, one community at a time.
+            </h1>
+            <p className="mt-6 max-w-xl text-lg sm:text-xl opacity-90">
+              At HopeBridge we partner with local communities to design sustainable solutions in education, health,
+              and livelihoods — focusing on dignity, resilience and long-term impact.
+            </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6">
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-md text-white font-medium shadow-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 hover:scale-[1.01] transform transition"
+              >
+                Get Involved
+              </a>
+              <a
+                href="#programs"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-md text-white font-medium ring-1 ring-white/30 bg-white/10 hover:bg-white/20 transition"
+              >
+                Our Programs
+              </a>
+            </div>
+
+            <div className="mt-8 flex items-center gap-6">
+              <div className="text-sm">
+                <p className="text-white/90 font-semibold">Impact last year</p>
+                <p className="text-2xl font-bold">8,500+ people reached</p>
+              </div>
+              <div className="text-sm border-l border-white/20 pl-6">
+                <p className="text-white/90 font-semibold">Projects</p>
+                <p className="text-2xl font-bold">120+ active</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: subtle card with image */}
+          <div className="relative">
+            <div className="rounded-xl shadow-2xl overflow-hidden ring-1 ring-black/10 dark:ring-white/6 bg-white/60 dark:bg-gray-800/60">
+              <img
+                src=""
+                alt="Community engagement"
+                className="w-full h-80 object-cover sm:h-96"
+              />
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Local volunteers making change</h3>
+                <p className="mt-2 text-sm text-gray-700 dark:text-gray-200/90">
+                  Our volunteers and partners are the backbone of our work. We listen first, then act together to solve problems.
+                </p>
+              </div>
+            </div>
+
+            {/* Decorative badge */}
+            <div className="absolute -bottom-6 left-6 transform translate-y-1/2">
+              <div className="inline-flex items-center gap-3 py-2 px-4 rounded-full bg-white/90 dark:bg-gray-900/90 shadow-md ring-1 ring-black/5">
+                <svg className="w-6 h-6 text-purple-600" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M12 2l3 7h7l-5.5 4 2 7L12 16 5.5 20l2-7L2 9h7l3-7z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <div className="text-sm">
+                  <div className="font-semibold text-gray-900 dark:text-gray-100">Trusted by 200+ partners</div>
+                  <div className="text-gray-600 dark:text-gray-300 text-xs">Across 12 regions</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </section>
+  );
+}
+
+/* =======================
+   ===== About Section =====
+   ======================= */
+function About({isDark}) {
+
+  const aboutBg = isDark
+    ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
+    : "bg-gradient-to-br from-purple-300 to-indigo-400";
+
+  return (
+    <section id="about" className={`py-20 ${aboutBg}`}>
+      <div className="max-w-6xl mx-auto px-6 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Image */}
+          <div className="rounded-xl overflow-hidden shadow-lg ring-1 ring-black/5">
+            <img
+              src="https://images.unsplash.com/photo-1521790369604-0f6db7f3f5b9?w=1200&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
+              alt="About our mission"
+              className="w-full h-80 object-cover"
+            />
+          </div>
+
+          {/* Text */}
+          <div>
+            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Our mission & vision</h2>
+            <p className="mt-4 text-gray-700 dark:text-gray-300">
+              HopeBridge was founded on a belief that communities should lead their own development. We partner with local
+              leaders to co-create programs that are culturally-rooted, environmentally-sound, and financially-sustainable.
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className={`p-4 rounded-lg ${aboutBg}`}>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Community-led</h3>
+                <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">We listen first and design with local voices at the center.</p>
+              </div>
+              <div className={`p-4 rounded-lg ${aboutBg}`}>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Sustainable impact</h3>
+                <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">Long-term solutions that endure beyond project cycles.</p>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <a href="#programs" className="inline-flex items-center gap-3 px-4 py-2 rounded-md bg-gradient-to-r from-purple-600 to-indigo-700 text-white shadow hover:opacity-95 transition">
+                Learn about our programs
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =======================
+   ===== Programs Section =====
+   ======================= */
+function Programs({isDark}) {
+    const Bg = isDark
+    ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
+    : "bg-gradient-to-tr from-purple-300 to-indigo-400";
+
+  return (
+    <section id="programs" className={`py-20 ${Bg}`}>
+      <div className="max-w-6xl mx-auto px-6 sm:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Programs & Initiatives</h2>
+          <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            From healthcare outreach to youth leadership, our programs address root causes and unlock opportunity.
+          </p>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {PROGRAMS.map(p => (
+            <article key={p.id} className={`p-6 rounded-xl ${Bg}`}>
+              <div className="flex items-center gap-4">
+                <div className="p-3 rounded-lg bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-white">
+                  {p.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{p.title}</h3>
+              </div>
+              <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">{p.desc}</p>
+              <a href="#contact" className="mt-4 inline-block text-sm font-medium text-indigo-600 dark:text-indigo-300 hover:underline">Learn more →</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =======================
+   ===== Team Section =====
+   ======================= */
+function Team({isDark}) {
+    const Bg = isDark
+    ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
+    : "bg-gradient-to-br from-purple-300 to-indigo-400";
+  return (
+    <section id="team" className={`py-20 ${Bg}`}>
+      <div className="max-w-6xl mx-auto px-6 sm:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Our Team</h2>
+          <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">A small, dedicated team — working with many partners to scale our reach.</p>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {TEAM.map(member => (
+            <div key={member.id} className={`${Bg} rounded-xl p-6 text-center ring-1 ring-black/5`}>
+              <img src={member.photo} alt={member.name} className="w-28 h-28 object-cover rounded-full mx-auto shadow-md" />
+              <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">{member.name}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">{member.role}</p>
+              <div className="mt-4 flex items-center justify-center gap-3">
+                {/* Social icons (placeholders) */}
+                <a href={member.socials.twitter} aria-label={`${member.name} on Twitter`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                  <svg className="w-4 h-4 text-gray-600 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 7v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+                <a href={member.socials.linkedin} aria-label={`${member.name} on LinkedIn`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                  <svg className="w-4 h-4 text-gray-600 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-14h4v2" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 9h4v12H2z" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+                <a href={member.socials.facebook} aria-label={`${member.name} on Facebook`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                  <svg className="w-4 h-4 text-gray-600 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =======================
+   ===== Contact Section =====
+   ======================= */
+function Contact({isDark}) {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState(null);
+
+  const Bg = isDark
+  ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
+  : "bg-gradient-to-tr from-purple-300 to-indigo-400";
+
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Simulate sending message.
+    setStatus({ type: "sending", msg: "Sending..." });
+    setTimeout(() => {
+      setStatus({ type: "success", msg: "Thank you — your message has been sent." });
+      setForm({ name: "", email: "", message: "" });
+    }, 900);
+  }
+
+  return (
+    <section id="contact" className={`py-20 ${Bg}`}>
+      <div className="max-w-4xl mx-auto px-6 sm:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Contact Us</h2>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">Questions? Partnership ideas? Drop us a message and we'll get back to you.</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="mt-8 bg-white dark:bg-gray-900 p-6 rounded-xl shadow ring-1 ring-black/5 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+              <input
+                id="name"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40"
+                placeholder="Your full name"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40"
+                placeholder="you@example.org"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              value={form.message}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40"
+              placeholder="Tell us about your idea or question..."
+            />
+          </div>
+
+          <div className="flex items-center justify-between gap-4">
+            <button
+              type="submit"
+              className="inline-flex items-center px-5 py-2 rounded-md bg-gradient-to-r from-purple-600 to-indigo-700 text-white font-medium shadow hover:translate-y-[-1px] transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
+            >
+              Send Message
+            </button>
+            <div className="text-sm text-gray-600 dark:text-gray-300">
+              {status ? (
+                <span className={status.type === "success" ? "text-green-600 dark:text-green-400" : ""}>
+                  {status.msg}
+                </span>
+              ) : (
+                <span>We reply within 3–5 business days.</span>
+              )}
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+/* =======================
+   ===== Footer =====
+   ======================= */
+function Footer({isDark}) {
+
+  const Bg = isDark
+    ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
+    : "bg-gradient-to-br from-purple-300 to-indigo-400";
+
+
+  return (
+    <footer className={` ${Bg}`}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-10">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="flex items-center gap-3">
+          <div className="flex items-center space-x-3">
+            <a 
+            href="#" 
+            onClick={(e) => { 
+              e.preventDefault(); // prevent default anchor jump
+              scrollTop(); 
+            }}
+            className="flex items-center gap-3">
+              <img 
+              src={miniIcon}
+              alt="My Icon" width={80} height={50}/>
+            </a>
+          </div>
+            <div>
+              <div className="font-semibold text-gray-900 dark:text-white">Silaah Global</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Creating opportunities, together.</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
+              <a href="#" aria-label="Facebook" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                <svg className="w-5 h-5 text-gray-700 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+              <a href="#" aria-label="Twitter" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                <svg className="w-5 h-5 text-gray-700 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 7v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+              <a href="#" aria-label="LinkedIn" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                <svg className="w-5 h-5 text-gray-700 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-14h4v2" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 9h4v12H2z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+            </div>
+
+            <div className="text-sm text-gray-600 dark:text-gray-300">&copy; {new Date().getFullYear()} HopeBridge. All rights reserved.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* =======================
+   ===== App (root) =====
+   ======================= */
+export default function App() {
+  const [isDark, setIsDark] = useDarkMode();
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 antialiased">
+      {/* Header */}
+      <Header isDark={isDark} toggleDark={setIsDark} />
+
+      {/* Main content */}
+      <main>
+        <Hero />
+        <About isDark={isDark}/>
+        <Programs isDark={isDark}/>
+        <Team isDark={isDark}/>
+        <Contact isDark={isDark}/>
+      </main>
+
+      {/* Footer */}
+      <Footer isDark={isDark}/>
     </div>
   );
 }
-
-
-
-// Hero section, 'Silaah Global'
-
-
-// Content, body {why/goals/steps}
-
-
-// Image carousel expanding on goals/steps
-
-
-// Fooooter (about, contact, donations etc)
-
