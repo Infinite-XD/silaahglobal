@@ -5,15 +5,16 @@ import React, { useState, useEffect } from "react";
 import myIcon from './assets/silaahfullicon.svg';
 import myDarkIcon from './assets/darkfinal.svg';
 import miniIcon from './assets/myIcon.svg';
+import miniDark from './assets/minidark2.svg';
 /* =======================
    Utility: Placeholder data
    ======================= */
 const PROGRAMS = [
   {
     id: 1,
-    title: "Community Education",
+    title: "Educational Support Visits",
     desc:
-      "Empowering local communities through classes, workshops and lifelong learning initiatives.",
+      "Visiting under-resourced schools to deliver supplies, host reading sessions, and inspire students and teachers.",
     icon: (
       <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -24,9 +25,9 @@ const PROGRAMS = [
   },
   {
     id: 2,
-    title: "Sustainable Agriculture",
+    title: "Donation Drives",
     desc:
-      "Supporting smallholders with training, seeds and market access for resilient food systems.",
+      "From bake sales to book collections, we turn simple ideas into meaningful contributions.",
     icon: (
       <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M3 21s4-4 9-4 9 4 9 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -37,9 +38,9 @@ const PROGRAMS = [
   },
   {
     id: 3,
-    title: "Healthcare Access",
+    title: "Awareness Campaigns",
     desc:
-      "Mobile clinics and preventive health programs reaching remote and underserved populations.",
+      "Amplifying conversations on literacy, climate, rights, and equity — one story at a time.",
     icon: (
       <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
         <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
@@ -49,9 +50,9 @@ const PROGRAMS = [
   },
   {
     id: 4,
-    title: "Youth Leadership",
+    title: "Community Collaborations",
     desc:
-      "Mentorship and leadership programs for young changemakers to scale positive impact.",
+      "Partnering with local changemakers to grow stronger and dream bigger together.",
     icon: (
       <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7l3-7z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
@@ -162,7 +163,7 @@ function Header({ isDark, toggleDark }) {
   // choose bg classes based on isDark (light: gradient, dark: semi-transparent gray)
   const headerBg = isDark
     ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
-    : "bg-gradient-to-br from-purple-300 to-indigo-400 border-b border-transparent";
+    : "bg-purple-300 border-b-[0.2px]";
 
   return (
     <header className={`sticky top-0 z-50 ${headerBg} backdrop-blur-md`}>
@@ -257,13 +258,18 @@ function Header({ isDark, toggleDark }) {
 /* =======================
    ===== Hero Section =====
    ======================= */
-function Hero() {
+function Hero({isDark}) {
+
+  const Bg = isDark
+    ? "bg-gradient-to-b from-gray-900/50 via-violet-950 to-gray-900/50 border-b border-gray-800"
+    : "bg-gradient-to-b from-purple-300 via-indigo-400 to-purple-300";
+
   return (
-    <section id="home" className="relative overflow-hidden">
+    <section id="home" className={`relative overflow-hidden ${Bg}`}>
       {/* Background gradient and subtle shapes */}
       <div className="absolute inset-0">
         <div
-          className="absolute inset-0 bg-gradient-to-br from-purple-600 to-indigo-700 opacity-90 dark:opacity-95"
+          className="absolute inset-0 "
           aria-hidden
         />
         <svg className="absolute -top-10 -left-10 opacity-20 w-96 h-96" viewBox="0 0 400 400" fill="none" aria-hidden>
@@ -282,11 +288,10 @@ function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight drop-shadow-sm">
-              Building brighter futures, one community at a time.
+              Empowering Change, One Act of Kindness at a Time.
             </h1>
             <p className="mt-6 max-w-xl text-lg sm:text-xl opacity-90">
-              At HopeBridge we partner with local communities to design sustainable solutions in education, health,
-              and livelihoods — focusing on dignity, resilience and long-term impact.
+              At Silaah Global, we’re a student-led movement turning empathy into action — making education accessible and kindness unstoppable.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6">
@@ -304,7 +309,7 @@ function Hero() {
               </a>
             </div>
 
-            <div className="mt-8 flex items-center gap-6">
+            {/* <div className="mt-8 flex items-center gap-6">
               <div className="text-sm">
                 <p className="text-white/90 font-semibold">Impact last year</p>
                 <p className="text-2xl font-bold">8,500+ people reached</p>
@@ -313,7 +318,7 @@ function Hero() {
                 <p className="text-white/90 font-semibold">Projects</p>
                 <p className="text-2xl font-bold">120+ active</p>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Right: subtle card with image */}
@@ -321,19 +326,19 @@ function Hero() {
             <div className="rounded-xl shadow-2xl overflow-hidden ring-1 ring-black/10 dark:ring-white/6 bg-white/60 dark:bg-gray-800/60">
               <img
                 src=""
-                alt="Community engagement"
+                alt="Some image?"
                 className="w-full h-80 object-cover sm:h-96"
               />
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Local volunteers making change</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Write somethign here</h3>
                 <p className="mt-2 text-sm text-gray-700 dark:text-gray-200/90">
-                  Our volunteers and partners are the backbone of our work. We listen first, then act together to solve problems.
+                  meow
                 </p>
               </div>
             </div>
 
             {/* Decorative badge */}
-            <div className="absolute -bottom-6 left-6 transform translate-y-1/2">
+            {/* <div className="absolute -bottom-6 left-6 transform translate-y-1/2">
               <div className="inline-flex items-center gap-3 py-2 px-4 rounded-full bg-white/90 dark:bg-gray-900/90 shadow-md ring-1 ring-black/5">
                 <svg className="w-6 h-6 text-purple-600" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M12 2l3 7h7l-5.5 4 2 7L12 16 5.5 20l2-7L2 9h7l3-7z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -343,7 +348,7 @@ function Hero() {
                   <div className="text-gray-600 dark:text-gray-300 text-xs">Across 12 regions</div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div> 
@@ -375,26 +380,27 @@ function About({isDark}) {
 
           {/* Text */}
           <div>
-            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Our mission & vision</h2>
+            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">More Than a Project — A Purpose.</h2>
             <p className="mt-4 text-gray-700 dark:text-gray-300">
-              HopeBridge was founded on a belief that communities should lead their own development. We partner with local
-              leaders to co-create programs that are culturally-rooted, environmentally-sound, and financially-sustainable.
+            Silaah was born from the belief that change doesn’t need permission — it needs compassion. 
+            What began as a small student initiative has grown into a movement that raises awareness, takes action, and amplifies voices for education and equality.
+            We’re young, but we’re not waiting for the future — we’re creating it.
             </p>
 
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className={`p-4 rounded-lg ${aboutBg}`}>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Community-led</h3>
-                <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">We listen first and design with local voices at the center.</p>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Our Mission</h3>
+                <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">To spark change through compassion, awareness, and shared knowledge.</p>
               </div>
               <div className={`p-4 rounded-lg ${aboutBg}`}>
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Sustainable impact</h3>
-                <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">Long-term solutions that endure beyond project cycles.</p>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">Our Vision</h3>
+                <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">A world where every child learns freely, every voice counts, and all realize their power to help.</p>
               </div>
             </div>
 
             <div className="mt-6">
               <a href="#programs" className="inline-flex items-center gap-3 px-4 py-2 rounded-md bg-gradient-to-r from-purple-600 to-indigo-700 text-white shadow hover:opacity-95 transition">
-                Learn about our programs
+                idk
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -419,9 +425,9 @@ function Programs({isDark}) {
     <section id="programs" className={`py-20 ${Bg}`}>
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Programs & Initiatives</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Awareness. Action. Impact.</h2>
           <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            From healthcare outreach to youth leadership, our programs address root causes and unlock opportunity.
+            Our work lives in the space between empathy and action. Every initiative we take — from donation drives to digital advocacy — reflects our belief that real change begins when awareness turns into collective compassion.
           </p>
         </div>
 
@@ -602,12 +608,12 @@ function Footer({isDark}) {
 
   const Bg = isDark
     ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
-    : "bg-gradient-to-br from-purple-300 to-indigo-400";
+    : "bg-gradient-to-br from-purple-300 to-indigo-400 border-t-[0.1px]";
 
 
   return (
-    <footer className={` ${Bg}`}>
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-10">
+    <footer className={`${Bg}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="flex items-center gap-3">
           <div className="flex items-center space-x-3">
@@ -619,8 +625,8 @@ function Footer({isDark}) {
             }}
             className="flex items-center gap-3">
               <img 
-              src={miniIcon}
-              alt="My Icon" width={80} height={50}/>
+              src={isDark ? miniDark : miniIcon}
+              alt="My Icon" width={65} height={65}/>
             </a>
           </div>
             <div>
@@ -671,7 +677,7 @@ export default function App() {
 
       {/* Main content */}
       <main>
-        <Hero />
+        <Hero isDark={isDark}/>
         <About isDark={isDark}/>
         <Programs isDark={isDark}/>
         <Team isDark={isDark}/>
