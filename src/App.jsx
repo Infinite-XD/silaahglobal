@@ -1,14 +1,27 @@
 // App.jsx
 // This the main file that displays all components
 
+
 import React, { useState, useEffect } from "react";
 import myIcon from './assets/silaahfullicon.svg';
 import myDarkIcon from './assets/darkfinal.svg';
 import miniIcon from './assets/myIcon.svg';
 import miniDark from './assets/minidark2.svg';
-/* =======================
-   Utility: Placeholder data
-   ======================= */
+import image1 from './assets/image1.png';
+import image2 from './assets/image2.png';
+import image3 from './assets/image3.png';
+import image4 from './assets/image4.png';
+import image5 from './assets/image5.png';
+import idk from './assets/idk.jpg' // this too
+import meow from './assets/meow.jpg' // change this with images
+import placeholder from './assets/placeholder.jpeg'
+
+
+const images = [image1, image3]
+
+
+
+
 const PROGRAMS = [
   {
     id: 1,
@@ -17,22 +30,24 @@ const PROGRAMS = [
       "Visiting under-resourced schools to deliver supplies, host reading sessions, and inspire students and teachers.",
     icon: (
       <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M2 17l10 5 10-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M10 6h6M10 10h6M10 14h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
   },
-  {
+{
     id: 2,
     title: "Donation Drives",
     desc:
       "From bake sales to book collections, we turn simple ideas into meaningful contributions.",
     icon: (
       <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path d="M3 21s4-4 9-4 9 4 9 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 3v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M8 7s1-4 4-4 4 4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M20 12v10H4V12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M22 7H2v5h20V7z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 22V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
   },
@@ -43,8 +58,9 @@ const PROGRAMS = [
       "Amplifying conversations on literacy, climate, rights, and equity — one story at a time.",
     icon: (
       <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M12 8v8M8 12h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M18 8A6 6 0 1 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="18" cy="8" r="3" fill="currentColor"/>
       </svg>
     ),
   },
@@ -55,45 +71,32 @@ const PROGRAMS = [
       "Partnering with local changemakers to grow stronger and dream bigger together.",
     icon: (
       <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7l3-7z" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
   },
 ];
 
+
 const TEAM = [
   {
     id: 1,
-    name: "Amina Noor",
-    role: "Founder & Executive Director",
+    name: "Fatima ;-;",
+    role: "Founder",
     photo:
-      "",
+      idk,
     socials: { twitter: "#", linkedin: "#", facebook: "#" },
   },
   {
     id: 2,
-    name: "Diego Alvarez",
-    role: "Programs Lead",
+    name: "Mustafa :p",
+    role: "Lead Developer",
     photo:
-      "https://images.unsplash.com/photo-1545996124-1ad95e5bdc17?w=800&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder",
+      meow,
     socials: { twitter: "#", linkedin: "#", facebook: "#" },
-  },
-  {
-    id: 3,
-    name: "Meera Patel",
-    role: "Community Coordinator",
-    photo:
-      "",
-    socials: { twitter: "#", linkedin: "#", facebook: "#" },
-  },
-  {
-    id: 4,
-    name: "Omar Hassan",
-    role: "Finance & Partnerships",
-    photo:
-      "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=800&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder",
-    socials: { twitter: "#", linkedin: "#", facebook: "#" },
-  },
+  }
 ];
 
 /* =======================
@@ -260,6 +263,18 @@ function Header({ isDark, toggleDark }) {
    ======================= */
 function Hero({isDark}) {
 
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 10000); // change image every 10s
+
+    return () => clearInterval(interval);
+  }, []);
+
+
   const Bg = isDark
     ? "bg-gradient-to-b from-gray-900/50 via-violet-950 to-gray-900/50 border-b border-gray-800"
     : "bg-gradient-to-b from-purple-300 via-indigo-400 to-purple-300";
@@ -321,34 +336,71 @@ function Hero({isDark}) {
             </div> */}
           </div>
 
-          {/* Right: subtle card with image */}
+          {/* RIGHT CARD */}
           <div className="relative">
             <div className="rounded-xl shadow-2xl overflow-hidden ring-1 ring-black/10 dark:ring-white/6 bg-white/60 dark:bg-gray-800/60">
-              <img
-                src=""
-                alt="Some image?"
-                className="w-full h-80 object-cover sm:h-96"
-              />
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Write somethign here</h3>
-                <p className="mt-2 text-sm text-gray-700 dark:text-gray-200/90">
-                  meow
-                </p>
+              <div className="relative w-full h-80 sm:h-96 overflow-hidden">
+                {images.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`slide-${index}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+                      index === currentIndex ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                ))}
+            <button
+              onClick={() =>
+                setCurrentIndex((currentIndex - 1 + images.length) % images.length)
+              }
+              className="absolute left-3 top-1/2 -translate-y-1/2
+                        flex h-11 w-11 items-center justify-center
+                        rounded-full bg-black/20 text-white
+                        hover:bg-black/70 transition"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+
+            <button
+              onClick={() =>
+                setCurrentIndex((currentIndex + 1) % images.length)
+              }
+              className="absolute right-3 top-1/2 -translate-y-1/2
+                        flex h-11 w-11 items-center justify-center
+                        rounded-full bg-black/20 text-white
+                        hover:bg-black/70 transition"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+            </button>
+
+
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 text-center">Smiles that begin with opportunity.
+                </h3>
               </div>
             </div>
-
-            {/* Decorative badge */}
-            {/* <div className="absolute -bottom-6 left-6 transform translate-y-1/2">
-              <div className="inline-flex items-center gap-3 py-2 px-4 rounded-full bg-white/90 dark:bg-gray-900/90 shadow-md ring-1 ring-black/5">
-                <svg className="w-6 h-6 text-purple-600" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M12 2l3 7h7l-5.5 4 2 7L12 16 5.5 20l2-7L2 9h7l3-7z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <div className="text-sm">
-                  <div className="font-semibold text-gray-900 dark:text-gray-100">Trusted by 200+ partners</div>
-                  <div className="text-gray-600 dark:text-gray-300 text-xs">Across 12 regions</div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div> 
@@ -372,7 +424,8 @@ function About({isDark}) {
           {/* Image */}
           <div className="rounded-xl overflow-hidden shadow-lg ring-1 ring-black/5">
             <img
-              src="https://images.unsplash.com/photo-1521790369604-0f6db7f3f5b9?w=1200&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
+              // src="https://images.unsplash.com/photo-1521790369604-0f6db7f3f5b9?w=1200&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
+              src={placeholder}
               alt="About our mission"
               className="w-full h-80 object-cover"
             />
@@ -400,7 +453,7 @@ function About({isDark}) {
 
             <div className="mt-6">
               <a href="#programs" className="inline-flex items-center gap-3 px-4 py-2 rounded-md bg-gradient-to-r from-purple-600 to-indigo-700 text-white shadow hover:opacity-95 transition">
-                idk
+                Programs
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -521,7 +574,7 @@ function Contact({isDark}) {
     // Simulate sending message.
     setStatus({ type: "sending", msg: "Sending..." });
     setTimeout(() => {
-      setStatus({ type: "success", msg: "Thank you — your message has been sent." });
+      setStatus({ type: "success", msg: "Our contact form is currently closed, but we’d love to connect on LinkedIn or Instagram." });
       setForm({ name: "", email: "", message: "" });
     }, 900);
   }
@@ -534,7 +587,7 @@ function Contact({isDark}) {
           <p className="mt-2 text-gray-600 dark:text-gray-300">Questions? Partnership ideas? Drop us a message and we'll get back to you.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-8 bg-white dark:bg-gray-900 p-6 rounded-xl shadow ring-1 ring-black/5 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-8 dark:bg-gray-900 p-6 rounded-xl shadow ring-1 ring-black/5 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
@@ -544,7 +597,7 @@ function Contact({isDark}) {
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40"
+                className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-indigo-500/10 dark:bg-gray-800 text-gray-700 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40 placeholder-gray-500 dark:placeholder-gray-400"
                 placeholder="Your full name"
               />
             </div>
@@ -558,7 +611,7 @@ function Contact({isDark}) {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40"
+                className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-indigo-500/10 dark:bg-gray-800 text-gray-700 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40 placeholder-gray-500 dark:placeholder-gray-400"
                 placeholder="you@example.org"
               />
             </div>
@@ -573,7 +626,7 @@ function Contact({isDark}) {
               value={form.message}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40"
+              className="mt-1 block w-full rounded-md border-gray-200 dark:border-gray-700 bg-indigo-500/10 dark:bg-gray-800 text-gray-700 dark:text-gray-100 shadow-sm focus:ring-2 focus:ring-purple-500/40 placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="Tell us about your idea or question..."
             />
           </div>
@@ -581,13 +634,13 @@ function Contact({isDark}) {
           <div className="flex items-center justify-between gap-4">
             <button
               type="submit"
-              className="inline-flex items-center px-5 py-2 rounded-md bg-gradient-to-r from-purple-600 to-indigo-700 text-white font-medium shadow hover:translate-y-[-1px] transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
+              className="inline-flex items-center px-5 py-2 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium shadow hover:translate-y-[-1px] transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
             >
               Send Message
             </button>
             <div className="text-sm text-gray-600 dark:text-gray-300">
               {status ? (
-                <span className={status.type === "success" ? "text-green-600 dark:text-green-400" : ""}>
+                <span className={status.type === "success" ? "text-red-600 dark:text-red-400" : ""}>
                   {status.msg}
                 </span>
               ) : (
@@ -656,7 +709,7 @@ function Footer({isDark}) {
               </a>
             </div>
 
-            <div className="text-sm text-gray-600 dark:text-gray-300">&copy; {new Date().getFullYear()} HopeBridge. All rights reserved.</div>
+            <div className="text-sm text-gray-600 dark:text-gray-300">&copy; {new Date().getFullYear()} Silaah Global. All rights reserved.</div>
           </div>
         </div>
       </div>

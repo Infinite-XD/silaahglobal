@@ -1,8 +1,14 @@
 # Silaah Global
 
 
-- Use react for frotend, ruby on rails for backend. 
+Whats left:
 
+Add and format images
+learn more directs to contact (change this later)
+Add contact
+Add linkedin/insta/facebook links
+Fix team section
+fix light mode colours
 
 React:
 for reference use:
