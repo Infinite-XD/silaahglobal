@@ -12,12 +12,15 @@ import image2 from './assets/image2.png';
 import image3 from './assets/image3.png';
 import image4 from './assets/image4.png';
 import image5 from './assets/image5.png';
+import image6 from './assets/image6.JPG'; // donation image
+import image8 from './assets/image8.JPG';
+import image9 from './assets/image9.JPG';
 import idk from './assets/idk.jpg' // this too
 import meow from './assets/meow.jpg' // change this with images
 import placeholder from './assets/placeholder.jpeg'
 
 
-const images = [image1, image3]
+const images = [image8, image9, image1]
 
 
 
@@ -87,7 +90,7 @@ const TEAM = [
     role: "Founder",
     photo:
       idk,
-    socials: { twitter: "#", linkedin: "#", facebook: "#" },
+    socials: { instagram: "#", linkedin: "https://www.linkedin.com/in/fatima-irfan-%F0%9F%87%B5%F0%9F%87%B8-390149368/", facebook: "#" },
   },
   {
     id: 2,
@@ -95,7 +98,7 @@ const TEAM = [
     role: "Lead Developer",
     photo:
       meow,
-    socials: { twitter: "#", linkedin: "#", facebook: "#" },
+    socials: { instagram: "#", linkedin: "https://www.linkedin.com/in/mustafa-khattak-90113435a/", facebook: "#" },
   }
 ];
 
@@ -396,7 +399,7 @@ function Hero({isDark}) {
 
 
               </div>
-              <div className="p-4">
+              <div className="p-4 rounded-lg bg-gradient-to-bl from-purple-300 to-indigo-400 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-whitep-4 ">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 text-center">Smiles that begin with opportunity.
                 </h3>
               </div>
@@ -488,7 +491,7 @@ function Programs({isDark}) {
           {PROGRAMS.map(p => (
             <article key={p.id} className={`p-6 rounded-xl ${Bg}`}>
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-lg bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-white">
+                <div className="p-3 rounded-lg bg-gradient-to-bl from-purple-200 to-indigo-400 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-white">
                   {p.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{p.title}</h3>
@@ -515,7 +518,7 @@ function Team({isDark}) {
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Our Team</h2>
-          <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">A small, dedicated team — working with many partners to scale our reach.</p>
+          <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">A small, dedicated team — always doing their best.</p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -526,19 +529,21 @@ function Team({isDark}) {
               <p className="text-sm text-gray-600 dark:text-gray-300">{member.role}</p>
               <div className="mt-4 flex items-center justify-center gap-3">
                 {/* Social icons (placeholders) */}
-                <a href={member.socials.twitter} aria-label={`${member.name} on Twitter`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                  <svg className="w-4 h-4 text-gray-600 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 7v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                <a href={member.socials.instagram} target='blank' aria-label={`${member.name} on Instagram`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                <svg className="w-4 h-4 text-gray-600 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                </svg>
                 </a>
-                <a href={member.socials.linkedin} aria-label={`${member.name} on LinkedIn`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                <a href={member.socials.linkedin} target='blank' aria-label={`${member.name} on LinkedIn`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
                   <svg className="w-4 h-4 text-gray-600 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-14h4v2" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M2 9h4v12H2z" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
                     <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </a>
-                <a href={member.socials.facebook} aria-label={`${member.name} on Facebook`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                <a href={member.socials.facebook} target='blank' aria-label={`${member.name} on Facebook`} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
                   <svg className="w-4 h-4 text-gray-600 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -695,12 +700,14 @@ function Footer({isDark}) {
                   <path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </a>
-              <a href="#" aria-label="Twitter" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+              <a href="#" aria-label="Instagram" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
                 <svg className="w-5 h-5 text-gray-700 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 7v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
                 </svg>
               </a>
-              <a href="#" aria-label="LinkedIn" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+              <a href="https://www.linkedin.com/company/silaahglobal/" target='blank' aria-label="LinkedIn" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
                 <svg className="w-5 h-5 text-gray-700 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-14h4v2" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M2 9h4v12H2z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
