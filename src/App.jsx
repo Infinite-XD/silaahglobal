@@ -615,7 +615,7 @@ function About({isDark}) {
 
 
               </div>
-              <div className="p-4 bg-gradient-to-bl from-purple-300 to-indigo-400 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-whitep-4 ">
+              <div className="p-4 bg-gradient-to-bl from-purple-300 to-indigo-400 dark:from-purple-800/20 dark:to-gray-900 text-purple-700 dark:text-whitep-4 ">
                 <h3 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-gray-100 text-center">Education — a right, not a privilege.
                 </h3>
               </div>
@@ -639,11 +639,11 @@ function About({isDark}) {
               We’re young, but we’re not waiting for the future — <span className="font-bold">we’re creating it.</span>
             </p>
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className={`p-4 rounded-lg ${aboutBg}`}>
+              <div className={`p-4 rounded-lg ${aboutBg} dark:border`}>
                 <h3 className="font-semibold text-gray-900 dark:text-gray-100">Our Mission</h3>
                 <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">To spark change through compassion, awareness, and shared knowledge.</p>
               </div>
-              <div className={`p-4 rounded-lg ${aboutBg}`}>
+              <div className={`p-4 rounded-lg ${aboutBg} dark:border`}>
                 <h3 className="font-semibold text-gray-900 dark:text-gray-100">Our Vision</h3>
                 <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">A world where every child learns freely, every voice counts, and all realize their power to help.</p>
               </div>
@@ -684,7 +684,7 @@ function Programs({isDark}) {
 
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {PROGRAMS.map(p => (
-            <article key={p.id} className={`p-6 rounded-xl ${Bg}`}>
+            <article key={p.id} className={`p-6 rounded-xl ${Bg} dark:border`}>
               <div className="flex items-center gap-4">
                 <div className="p-3 rounded-lg bg-gradient-to-bl from-purple-200 to-indigo-400 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-white">
                   {p.icon}
@@ -718,7 +718,7 @@ function Team({isDark}) {
 
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {TEAM.map(member => (
-            <div key={member.id} className={`${Bg} rounded-xl p-6 text-center ring-1 ring-black/5`}>
+            <div key={member.id} className={`${Bg} dark:border rounded-xl p-6 text-center ring-1 ring-black/5`}>
               {isDark ? <UserIconDark  id={member.id} size={112} className="w-28 h-28 rounded-full mx-auto shadow-md"/> : <UserIconLight id={member.id} size={112} className="w-28 h-28 rounded-full mx-auto shadow-md" />}
               {/* <img src={member.photo} alt={member.name} className="w-28 h-28 object-cover rounded-full mx-auto shadow-md" /> */}
               <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">{member.name}</h3>
