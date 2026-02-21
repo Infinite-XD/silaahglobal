@@ -3,26 +3,145 @@
 
 
 import React, { useState, useEffect } from "react";
-import myIcon from './assets/silaahfullicon.svg';
-import myDarkIcon from './assets/darkfinal.svg';
-import miniIcon from './assets/myIcon.svg';
-import miniDark from './assets/minidark2.svg';
+
+// icons
+import myIcon from './assets/icons/silaahfullicon.svg';
+import myDarkIcon from './assets/icons/darkfinal.svg';
+import miniIcon from './assets/icons/myIcon.svg';
+import miniDark from './assets/icons/minidark2.svg';
+
+
+// hero section imagess
 import image1 from './assets/image1.png';
-import image2 from './assets/image2.png';
-import image3 from './assets/image3.png';
-import image4 from './assets/image4.png';
-import image5 from './assets/image5.png';
-import image6 from './assets/image6.JPG'; // donation image
-import image8 from './assets/image8.JPG';
-import image9 from './assets/image9.JPG';
-import idk from './assets/idk.jpg' // this too
-import meow from './assets/meow.jpg' // change this with images
-import placeholder from './assets/placeholder.jpeg'
+import image2 from './assets/image2.JPG';
+import image3 from './assets/image3.JPG';
+import image4 from './assets/image4.webp';
 
 
-const images = [image8, image9, image1]
+// about section images ('more than a...') smth with education?
+import about_image1 from './assets/about_images/1.webp';
+import about_image2 from './assets/about_images/2.png';
+import about_image3 from './assets/about_images/3.jpg';
+import about_image4 from './assets/about_images/4.jpg';
+import about_image5 from './assets/about_images/5.PNG';
+
+// import image2 from './assets/image2.png';
+// import image3 from './assets/image3.png';
+// import image4 from './assets/image4.png';
+// import image5 from './assets/image5.png';
+// import image6 from './assets/image6.JPG'; // donation image
 
 
+const images = [image1, image2, image3, image4]
+const about_images = [about_image1, about_image2, about_image3, about_image4, about_image5,]
+
+
+const UserIconDark = ({ size = 112, id = "x", className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 128 128"
+    role="img"
+    aria-label="User profile icon"
+    className={className}
+  >
+    <defs>
+      {/* Darker, cohesive purple theme */}
+      <linearGradient id={`ring-${id}`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#170840" />  {/* violet-600 */}
+        <stop offset="100%" stopColor="#111724" /> {/* indigo-700 */}
+      </linearGradient>
+
+      <linearGradient id={`avatar-${id}`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#170840" />  {/* violet-400 */}
+        <stop offset="100%" stopColor="#111724" /> {/* violet-700 */}
+      </linearGradient>
+
+      <clipPath id={`avatarClip-${id}`}>
+        <circle cx="64" cy="64" r="46" />
+      </clipPath>
+    </defs>
+
+    {/* Inner background (darker + purple-tinted) */}
+    <circle cx="64" cy="64" r="50" fill="#828ff5" />
+
+    {/* Icon-style silhouette */}
+    <g clipPath={`url(#avatarClip-${id})`}>
+      {/* Head */}
+      <circle cx="64" cy="55" r="16" fill={`url(#avatar-${id})`} />
+
+      {/* Shoulders / torso: filled shape (more "icon-like" than a stroke line) */}
+      <path
+        d="M34 112c2-18 16-30 30-30h0c14 0 28 12 30 30"
+        fill={`url(#avatar-${id})`}
+        opacity="0.95"
+      />
+
+    </g>
+  </svg>
+);
+
+const UserIconLight = ({ size = 112, id = "x", className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 128 128"
+    role="img"
+    aria-label="User profile icon"
+    className={className}
+  >
+    <defs>
+      {/* Darker, cohesive purple theme */}
+      <linearGradient id={`ring-${id}`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#170840" /> 
+        <stop offset="100%" stopColor="#111724" /> 
+      </linearGradient>
+
+      <linearGradient id={`avatar-${id}`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#170840" />
+        <stop offset="100%" stopColor="#111724" />
+      </linearGradient>
+
+      <clipPath id={`avatarClip-${id}`}>
+        <circle cx="64" cy="64" r="46" />
+      </clipPath>
+    </defs>
+
+    {/* Inner background (darker + purple-tinted) */}
+    <circle cx="64" cy="64" r="50" fill="#c3adf8" />
+
+    {/* Icon-style silhouette */}
+    <g clipPath={`url(#avatarClip-${id})`}>
+      {/* Head */}
+      <circle cx="64" cy="55" r="16" fill={`url(#avatar-${id})`} />
+
+      {/* Shoulders / torso: filled shape (more "icon-like" than a stroke line) */}
+      <path
+        d="M34 112c2-18 16-30 30-30h0c14 0 28 12 30 30"
+        fill={`url(#avatar-${id})`}
+        opacity="0.95"
+      />
+
+    </g>
+  </svg>
+);
+
+function ThemedUserIcon(props) {
+  return (
+    <>
+      <UserIconLight
+        {...props}
+        className={`${props.className} block dark:hidden`}
+      />
+      <UserIconDark
+        {...props}
+        className={`${props.className} hidden dark:block`}
+      />
+    </>
+  );
+}
 
 
 const PROGRAMS = [
@@ -86,18 +205,20 @@ const PROGRAMS = [
 const TEAM = [
   {
     id: 1,
-    name: "Fatima ;-;",
+    name: "Fatima I.",
     role: "Founder",
-    photo:
-      idk,
     socials: { instagram: "#", linkedin: "https://www.linkedin.com/in/fatima-irfan-%F0%9F%87%B5%F0%9F%87%B8-390149368/", facebook: "#" },
   },
   {
     id: 2,
-    name: "Mustafa :p",
+    name: "Rania",
+    role: "Co-Founder",
+    socials: { instagram: "#", linkedin: "https://www.linkedin.com/in/mustafa-khattak-90113435a/", facebook: "#" },
+  },
+  {
+    id: 3,
+    name: "Mustafa K.",
     role: "Lead Developer",
-    photo:
-      meow,
     socials: { instagram: "#", linkedin: "https://www.linkedin.com/in/mustafa-khattak-90113435a/", facebook: "#" },
   }
 ];
@@ -302,7 +423,7 @@ function Hero({isDark}) {
       </div>
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 lg:py-28">
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-10 sm:py-10 lg:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight drop-shadow-sm">
@@ -399,8 +520,8 @@ function Hero({isDark}) {
 
 
               </div>
-              <div className="p-4 rounded-lg bg-gradient-to-bl from-purple-300 to-indigo-400 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-whitep-4 ">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 text-center">Smiles that begin with opportunity.
+              <div className="p-4 bg-gradient-to-bl from-purple-300 to-indigo-400 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-whitep-4 ">
+                <h3 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-gray-100 text-center">Smiles that begin with opportunity.
                 </h3>
               </div>
             </div>
@@ -416,33 +537,107 @@ function Hero({isDark}) {
    ======================= */
 function About({isDark}) {
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 10000); // change image every 10s
+
+    return () => clearInterval(interval);
+  }, []);
+
   const aboutBg = isDark
     ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
     : "bg-gradient-to-br from-purple-300 to-indigo-400";
 
   return (
-    <section id="about" className={`py-20 ${aboutBg}`}>
+    <section id="about" className={`sm:py-10 py-10 lg:py-20 ${aboutBg}`}>
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Image */}
-          <div className="rounded-xl overflow-hidden shadow-lg ring-1 ring-black/5">
+          <div className="relative">
+            <div className="rounded-xl shadow-2xl overflow-hidden ring-1 ring-black/10 dark:ring-white/6 bg-white/60 dark:bg-gray-800/60">
+              <div className="relative w-full h-80 sm:h-96 overflow-hidden">
+                {about_images.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`slide-${index}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+                      index === currentIndex ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                ))}
+            <button
+              onClick={() =>
+                setCurrentIndex((currentIndex - 1 + about_images.length) % about_images.length)
+              }
+              className="absolute left-3 top-1/2 -translate-y-1/2
+                        flex h-11 w-11 items-center justify-center
+                        rounded-full bg-black/20 text-white
+                        hover:bg-black/70 transition"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+
+            <button
+              onClick={() =>
+                setCurrentIndex((currentIndex + 1) % about_images.length)
+              }
+              className="absolute right-3 top-1/2 -translate-y-1/2
+                        flex h-11 w-11 items-center justify-center
+                        rounded-full bg-black/20 text-white
+                        hover:bg-black/70 transition"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+            </button>
+
+
+              </div>
+              <div className="p-4 bg-gradient-to-bl from-purple-300 to-indigo-400 dark:from-purple-700/20 dark:to-indigo-700/20 text-purple-700 dark:text-whitep-4 ">
+                <h3 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-gray-100 text-center">Education — a right, not a privilege.
+                </h3>
+              </div>
+            </div>
+          </div>
+          {/* <div className="rounded-xl overflow-hidden shadow-lg ring-1 ring-black/5">
             <img
               // src="https://images.unsplash.com/photo-1521790369604-0f6db7f3f5b9?w=1200&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
               src={placeholder}
               alt="About our mission"
               className="w-full h-80 object-cover"
             />
-          </div>
+          </div> */}
 
           {/* Text */}
           <div>
             <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">More Than a Project — A Purpose.</h2>
             <p className="mt-4 text-gray-700 dark:text-gray-300">
-            Silaah was born from the belief that change doesn’t need permission — it needs compassion. 
-            What began as a small student initiative has grown into a movement that raises awareness, takes action, and amplifies voices for education and equality.
-            We’re young, but we’re not waiting for the future — we’re creating it.
+              Silaah was born from the belief that change doesn’t need permission — it needs compassion. 
+              What began as a small student initiative is taking its first steps toward raising awareness, taking action, and amplifying voices for education and equality.
+              We’re young, but we’re not waiting for the future — <span className="font-bold">we’re creating it.</span>
             </p>
-
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className={`p-4 rounded-lg ${aboutBg}`}>
                 <h3 className="font-semibold text-gray-900 dark:text-gray-100">Our Mission</h3>
@@ -478,7 +673,7 @@ function Programs({isDark}) {
     : "bg-gradient-to-tr from-purple-300 to-indigo-400";
 
   return (
-    <section id="programs" className={`py-20 ${Bg}`}>
+    <section id="programs" className={`sm:py-10 py-10 lg:py-20 ${Bg}`}>
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Awareness. Action. Impact.</h2>
@@ -514,7 +709,7 @@ function Team({isDark}) {
     ? "bg-gray-900/60 border-b border-transparent dark:border-gray-800"
     : "bg-gradient-to-br from-purple-300 to-indigo-400";
   return (
-    <section id="team" className={`py-20 ${Bg}`}>
+    <section id="team" className={`sm:py-10 py-10 lg:py-20 ${Bg}`}>
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Our Team</h2>
@@ -524,7 +719,8 @@ function Team({isDark}) {
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {TEAM.map(member => (
             <div key={member.id} className={`${Bg} rounded-xl p-6 text-center ring-1 ring-black/5`}>
-              <img src={member.photo} alt={member.name} className="w-28 h-28 object-cover rounded-full mx-auto shadow-md" />
+              {isDark ? <UserIconDark  id={member.id} size={112} className="w-28 h-28 rounded-full mx-auto shadow-md"/> : <UserIconLight id={member.id} size={112} className="w-28 h-28 rounded-full mx-auto shadow-md" />}
+              {/* <img src={member.photo} alt={member.name} className="w-28 h-28 object-cover rounded-full mx-auto shadow-md" /> */}
               <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">{member.name}</h3>
               <p className="text-sm text-gray-600 dark:text-gray-300">{member.role}</p>
               <div className="mt-4 flex items-center justify-center gap-3">
@@ -700,7 +896,7 @@ function Footer({isDark}) {
                   <path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </a>
-              <a href="#" aria-label="Instagram" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+              <a href="https://www.instagram.com/silaah_global/" target='blank' aria-label="Instagram" className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
                 <svg className="w-5 h-5 text-gray-700 dark:text-gray-200" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round"/>

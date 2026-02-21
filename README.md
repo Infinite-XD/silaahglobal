@@ -34,3 +34,12 @@ Reach out through the website’s contact section or our social platforms. We’
 
 
 **© Silaah Global — Creating opportunities, together.**
+
+# TO DO
+
+- add some dynamic functionality? think of smth, we need impact not just flipping content 
+        - maybe some way to actually showcase the things done?
+        - also we need to do something, we need to do more, maybe create a group to add goals/tasks to do? 
+- add facebook link
+- fix readme
+    - add next steps, goals for the NGO and the website
